@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "type": "module",
   "dependencies": {
-    "crypto-js": "^3.1.9-1",
+    "crypto-js": "^3.3.0",
     "elliptic": "^6.4.0",
+    "init": "^0.1.2",
     "ramda": "^0.25.0"
   },
   "scripts": {

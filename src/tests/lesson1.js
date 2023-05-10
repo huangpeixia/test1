@@ -7,10 +7,11 @@ const main = () => {
   var blockchain = new Blockchain('BitCoin')
 
   // 创建创世区块
-  var genesisBlock = new Block(blockchain, 'root', 0, 'root')
+  var genesisBlock = new Block(blockchain, 'nil', 0, 'root')
 
   // 设置创世区块
   blockchain.genesis = genesisBlock
+  blockchain.blocks[genesisBlock.hash]=genesisBlock
 
   // 构建区块
   var newBlock = new Block(
@@ -40,7 +41,7 @@ const main = () => {
   blockchain.blocks[nextBlock.hash] = nextBlock
   blockchain.blocks[nextCompetitionBlock.hash] = nextCompetitionBlock
 
-  let longestChain = blockchain.longestChain()
+  let longestChain = blockchain.longestChain(genesisBlock)
 
   console.assert(longestChain.length == 2, 'Block height should be 2')
 
@@ -53,10 +54,10 @@ const main = () => {
 
   blockchain.blocks[thirdBlock.hash] = thirdBlock
 
-  longestChain = blockchain.longestChain()
+  longestChain = blockchain.longestChain(genesisBlock)
 
   // 区块检查
-  console.assert(longestChain.length == 3, 'Block height should be 2')
+  console.assert(longestChain.length == 3, 'Block height should be 3')
   console.assert(
     longestChain[2].hash == thirdBlock.hash,
     `Height block hash should be ${thirdBlock.hash}`,

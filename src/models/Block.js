@@ -3,7 +3,12 @@ class Block {
   /* 构造函数需要包含
 
   */
-  constructor() {}
+  constructor(blockchain,fatherHash,height,hash) {
+    this.blockchain=blockchain
+    this.fatherHash=fatherHash  //父区块的哈希值
+    this.height=height
+    this.hash=hash
+  }
 }
 
 export default Block
