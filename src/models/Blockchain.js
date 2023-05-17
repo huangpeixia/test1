@@ -24,8 +24,8 @@ class Blockchain {
     //console.log(blocks)
     let num = 0
 
-    for(let key in blocks){//添加block，
-      if (blocks[key].fatherHash == genesisBlock.hash){
+    for(let key in blocks){//添加block
+      if (blocks[key].fatherHash == genesisBlock.hash && blocks[key] != genesisBlock){
         num++
         if (num > 1){
           let newBlocks = longest
