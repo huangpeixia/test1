@@ -79,6 +79,76 @@ const main = () => {
     longestChain[2].hash == thirdBlock.hash,
     `Height block hash should be ${thirdBlock.hash}`,
   )
+  let fourthBlock = new Block(
+    blockchain,
+    thirdBlock.hash,
+    4,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  fourthBlock = calcNonce(fourthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[fourthBlock.hash] = fourthBlock
+  let fifthBlock = new Block(
+    blockchain,
+    fourthBlock.hash,
+    5,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  fifthBlock = calcNonce(fifthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[fifthBlock.hash] = fifthBlock
+  let sixthBlock = new Block(
+    blockchain,
+    fifthBlock.hash,
+    6,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  sixthBlock = calcNonce(sixthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[sixthBlock.hash] = sixthBlock
+  let seventhBlock = new Block(
+    blockchain,
+    sixthBlock.hash,
+    7,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  seventhBlock = calcNonce(seventhBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[seventhBlock.hash] = seventhBlock
+  let eighthBlock = new Block(
+    blockchain,
+    seventhBlock.hash,
+    8,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  eighthBlock = calcNonce(eighthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[eighthBlock.hash] = eighthBlock
+  let ninthBlock = new Block(
+    blockchain,
+    eighthBlock.hash,
+    9,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  ninthBlock = calcNonce(ninthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[ninthBlock.hash] = ninthBlock
+  let tenthBlock = new Block(
+    blockchain,
+    ninthBlock.hash,
+    10,
+    sha256(new Date().getTime().toString()).toString(),
+  )
+
+  tenthBlock = calcNonce(tenthBlock)
+  //console.log(thirdBlock.hash)
+  blockchain.blocks[tenthBlock.hash] = tenthBlock
 }
 
 main()

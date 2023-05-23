@@ -1,5 +1,3 @@
-import sha256 from 'crypto-js/sha256.js'
-
 export const validateHash = () => {}
 
 export const calcNonce = (block) => {
@@ -7,7 +5,7 @@ export const calcNonce = (block) => {
   const start = new Date().getTime()
   let calcTimes = 0
   while (!block.isValid()) {
-    block.setNonce(sha256(new Date().getTime().toString()).toString())
+    block.setNonce()
     calcTimes++
   }
   const end = new Date().getTime()
