@@ -88,22 +88,16 @@ class Blockchain {
     if (this.containsBlock(block)) return
 
     // 添加 UTXO 快照与更新的相关逻辑
-    // const father = this.blocks[block.fatherHash]
-    // if (block.fatherHash == "root"){
-    // }else if(father != undefined){
-    //   let newUTXOPool = father.utxoPool.clone()
-    //   block.utxoPool = newUTXOPool.addUTXO(block.coinbaseBeneficiary, 12.5)
-    // }
 
     if(block.timeStamp == "root"){  //如果区块是root，添加交易
       block.utxoPool.addUTXO("root", 12.5)
       block.coinbaseBeneficiary=12.5
     }else{                          //如果是其他区块，交易是父区快的克隆
       block.utxoPool = block.blockchain.blocks[block.fatherHash].utxoPool.clone()
-      if(block.miner != undefined){       //本区块还有交易，再加
-        block.utxoPool.addUTXO(block.miner, 12.5)
+      if(block.coinbaseBeneficiary != undefined){       //本区块还有交易，再加
+        block.utxoPool.addUTXO(block.coinbaseBeneficiary, 12.5)
       }else{
-        block.utxoPool.addUTXO(block.blockchain.blocks[block.fatherHash].miner, 12.5)
+        block.utxoPool.addUTXO(block.blockchain.blocks[block.fatherHash].coinbaseBeneficiary, 12.5)
       }
     }
 

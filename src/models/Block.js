@@ -5,7 +5,7 @@ export const DIFFICULTY = 3
 class Block {
   // 1. 完成构造函数及其参数
 
-  constructor(blockchain,fatherHash,height,timeStamp,miner) {
+  constructor(blockchain,fatherHash,height,timeStamp,pubKey) {
     this.version=1
     this.blockchain=blockchain
     this.fatherHash=fatherHash  //父区块的哈希值
@@ -15,8 +15,7 @@ class Block {
     this.nonce=0
     this.hash=sha256(new Date().getTime().toString()).toString()
     this.utxoPool=new UTXOPool()    //此区块所含的交易信息
-    this.coinbaseBeneficiary=miner   //比特币奖励
-    this.miner=miner
+    this.coinbaseBeneficiary=pubKey   //比特币奖励
   }
 
   isValid() {

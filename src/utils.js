@@ -1,4 +1,11 @@
-export const validateHash = () => {}
+import sha256 from 'crypto-js/sha256.js'
+
+export const validateHash = (hash) => {
+  if (hash != undefined){
+    return true
+  }
+  return false
+}
 
 export const calcNonce = (block) => {
   console.log(`calc nonce of block ${block.height} `)

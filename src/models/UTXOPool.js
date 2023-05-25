@@ -9,12 +9,12 @@ class UTXOPool {
   /**
    * 将交易的信息更新至 UTXOPool 中
    */
-  addUTXO(miner, amount) {
-    if (this.utxos[miner]){  //如果已经存在，交易叠加
-      this.utxos[miner].amount += amount
+  addUTXO(publicKey, amount) {
+    if (this.utxos[publicKey]){  //如果已经存在，交易叠加
+      this.utxos[publicKey].amount += amount
     }else{
       const u = new UTXO(amount)
-      this.utxos[miner] = u
+      this.utxos[publicKey] = u
     }
   }
 
@@ -22,6 +22,47 @@ class UTXOPool {
   clone() {
     return new UTXOPool(this.utxos)
   }
+
+    // 处理交易函数
+    handleTransaction(trx){  //处理交易，更新余额
+      let i = 0
+      let num1 = 0
+      let num2 = 0
+      for(let key in this.utxos){
+        if(key == trx.minePubKey && this.utxos[key].amount < trx.money){
+          break
+        }
+
+        if (key == trx.minePubKey){
+          num1 = this.utxos[key].amount
+          this.utxos[key].amount -= trx.money
+          num2 = this.utxos[key].amount
+        }
+        else if (key == trx.receiverPubKey){
+          i++
+          this.utxos[key].amount += trx.money
+        }
+      }
+
+      if(i == 0 && num1 != num2){
+        const u = new UTXO(trx.money)    
+        this.utxos[trx.receiverPubKey] = u
+      }
+    }
+
+    // 验证交易合法性
+    /**
+     * 验证余额
+     * 返回 bool 
+     */
+    isValidTransaction(pubKey, money){   //检验有没有那么多钱来发
+      for(let key in this.utxos){
+        if (key == pubKey && this.utxos[pubKey].amount >= money){
+          return true
+        }
+      }
+      return false
+    }
 }
 
 export default UTXOPool
