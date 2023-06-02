@@ -12,7 +12,7 @@ class Transaction {
 
   // 更新交易 hash
   _setHash() {
-
+    this.hash=this._calculateHash()
   }
 
   // 计算交易 hash 的摘要函数
