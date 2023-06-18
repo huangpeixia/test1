@@ -24,45 +24,44 @@ class UTXOPool {
   }
 
     // 处理交易函数
-    handleTransaction(trx){  //处理交易，更新余额
-      let i = 0
-      let num1 = 0
-      let num2 = 0
-      for(let key in this.utxos){
-        if(key == trx.minePubKey && this.utxos[key].amount < trx.money){
-          break
-        }
-
-        if (key == trx.minePubKey){
-          num1 = this.utxos[key].amount
-          this.utxos[key].amount -= trx.money
-          num2 = this.utxos[key].amount
-        }
-        else if (key == trx.receiverPubKey){
-          i++
-          this.utxos[key].amount += trx.money
-        }
+  handleTransaction(trx){  //处理交易，更新余额
+    let i = 0
+    let num1 = 0
+    let num2 = 0
+    for(let key in this.utxos){
+      if(key == trx.minePubKey && this.utxos[key].amount < trx.money+trx.fee){
+        break
       }
 
-      if(i == 0 && num1 != num2){
-        const u = new UTXO(trx.money)    
-        this.utxos[trx.receiverPubKey] = u
+      if (key == trx.minePubKey){
+        num1 = this.utxos[key].amount
+        this.utxos[key].amount -= (trx.money+trx.fee)
+        num2 = this.utxos[key].amount
+      }else if (key == trx.receiverPubKey){
+        i++
+        this.utxos[key].amount += (trx.money+trx.fee)
       }
     }
 
-    // 验证交易合法性
-    /**
-     * 验证余额
-     * 返回 bool 
-     */
-    isValidTransaction(pubKey, money){   //检验有没有那么多钱来发
-      for(let key in this.utxos){
-        if (key == pubKey && this.utxos[pubKey].amount >= money){
-          return true
-        }
-      }
-      return false
+    if(i == 0 && num1 != num2){
+      const u = new UTXO(trx.money+trx.fee)    
+      this.utxos[trx.receiverPubKey] = u
     }
+  }
+
+  // 验证交易合法性
+  /**
+   * 验证余额
+   * 返回 bool 
+   */
+  isValidTransaction(trx){   //检验有没有那么多钱来发
+    for(let key in this.utxos){
+      if (key == trx.minePubKey && this.utxos[key].amount >= (trx.money+trx.fee)){
+        return true
+      }
+    }
+    return false
+  }
 }
 
 export default UTXOPool
